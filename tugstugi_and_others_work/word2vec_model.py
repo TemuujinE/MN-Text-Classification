@@ -37,8 +37,9 @@ trained_model_and_fitted_encoder_path = '../models/'
 plots_path = '../plots'
 
 # Loading model trained using Kaggle kernel
-reconstructed_model = keras.models.load_model(trained_model_and_fitted_encoder_path + \
-                                              'word2vec_fb_pretrained_model.h5')
+url = 'https://drive.google.com/file/d/1Ed1oRbL5kjcUw2FXqO8o67gXap1VWaVL/view?usp=sharing'
+path = 'https://drive.google.com/uc?export=download&id=' + url.split('/')[-2]
+reconstructed_model = keras.models.load_model(path)
 
 # Loading fitted encoder classes
 encoder = LabelBinarizer()
