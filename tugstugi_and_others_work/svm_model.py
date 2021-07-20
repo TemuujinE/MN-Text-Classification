@@ -23,8 +23,8 @@ df_path = '../../main_dataset/'
 trained_model_and_fitted_encoder_path = '../models/'
 plots_path = '../plots/'
 
-# 1111 dataset with 'Асуулт' label created and all rows where 'content' contains numbers are dropped.
-url = 'https://drive.google.com/file/d/1PCMROt6zbd90AfODLSEGogYfqzHnohTx/view?usp=sharing'
+# 1111 dataset: Rows where content is entirely written in latin letters are dropped
+url = 'https://drive.google.com/file/d/1qLoomeZbKcgdvAPa44JUOzRMjq04pmpI/view?usp=sharing'
 path = 'https://drive.google.com/uc?export=download&id=' + url.split('/')[-2]
 df = pd.read_csv(path)
 
@@ -38,9 +38,11 @@ def sp_tokenize(w):
 train, test = train_test_split(df, test_size = 0.1, random_state = 999, stratify = df['type_text'])
 
 # Creating SVM model pipeline
+# Adding class_weight = 'balanced'
 text_clf = Pipeline([('vect', CountVectorizer(tokenizer = sp_tokenize, lowercase = True)),
                      ('tfidf', TfidfTransformer()),
-                     ('clf', SGDClassifier(loss = 'hinge', penalty = 'l2', alpha = 1e-4, max_iter = 5, random_state = 0))])
+                     ('clf', SGDClassifier(loss = 'hinge', penalty = 'l2', alpha = 1e-4, 
+                                           max_iter = 5, random_state = 0, class_weight = 'balanced'))])
 
 t = time.time()
 text_clf = text_clf.fit(train['content'], train['type_text'])
