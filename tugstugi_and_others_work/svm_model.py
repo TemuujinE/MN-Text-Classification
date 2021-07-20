@@ -24,7 +24,9 @@ trained_model_and_fitted_encoder_path = '../models/'
 plots_path = '../plots/'
 
 # 1111 dataset with 'Асуулт' label created and all rows where 'content' contains numbers are dropped.
-df = pd.read_csv(df_path + '1111_numbers_row_dropped.csv')
+url = 'https://drive.google.com/file/d/1PCMROt6zbd90AfODLSEGogYfqzHnohTx/view?usp=sharing'
+path = 'https://drive.google.com/uc?export=download&id=' + url.split('/')[-2]
+df = pd.read_csv(path)
 
 sp = spm.SentencePieceProcessor()
 sp.Load('../mongolian_bert_sentencepiece/mn_uncased.model')
